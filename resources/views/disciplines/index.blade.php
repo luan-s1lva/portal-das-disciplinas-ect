@@ -4,7 +4,7 @@
 @endsection
 @section('content')
 
-<section class='hero-section mb-4'>
+<section class='hero-section '>
     <div class="container">
         <div class="row">
             <div class="col-12 text-center my-4 title-subject-container">
@@ -23,7 +23,7 @@
 <section class='disciplines remove-margin-bottom'>
     <div class="disciplines-container container">
         <h1 class='text-center text-white'>Disciplinas Cadastradas</h1>
-        <p class='text-center p-text' style='color: #80A6C6'>Lista de disciplinas disponíveis no portal... sempre
+        <p class='text-center p-text' style='color: #dedfe0'>Lista de disciplinas disponíveis no portal... sempre
             crescendo!
         </p>
         @auth

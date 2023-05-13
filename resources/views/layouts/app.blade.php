@@ -9,9 +9,9 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="keywords" content="portal das disciplinas, imd">
     <meta name="robots" content="@yield('robots','all')">
-    <title>@yield('title', 'Portal das Disciplinas IMD')</title>
+    <title>@yield('title', 'Portal das Disciplinas ECT')</title>
     <meta name="description" content="@yield('description','Conheça as disciplinas do IMD de forma mais prática!')">
-    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="shortcut icon" href="img/newImg/simbolo.png" />
     {{-- bootstrap CSS --}}
     <link rel="stylesheet" href="{{asset('css/app.css')}}">
     {{-- CSS --}}
