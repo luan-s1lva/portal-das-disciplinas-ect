@@ -8,11 +8,11 @@
     <div class="container">
         <div class="row">
             <div class="col-12 text-center my-4 title-subject-container">
-                <h1 class="title-subject display-title " style='color: #1F2937'>Portal das Disciplinas - IMD/UFRN</h1>
+                <h1 class="title-subject display-title " style='color: #1F2937'>Portal das Disciplinas - ECT/UFRN</h1>
                 <div class="row justify-content-center">
                     <p class='p-text mt-3  text-center col-md-10  larger-p'>Cada disciplina aqui conta com entrevistas,
-                        informações, materiais, indicação de dificuldades e muito mais sobre componentes
-                        curriculares do Bacharelado em TI do IMD/UFRN.<p>
+                        informações, materiais, indicação de dificuldades e muito mais sobre os componentes
+                        curriculares do Bacharelado em Ciências & Tecnologia da ECT/UFRN.<p>
                 </div>
             </div>
         </div>
@@ -73,7 +73,7 @@
                                     </div>
                                 </div>
                             @else
-                                <img src="{{ asset('img/IMD_logo.svg') }}" class="card-img-top light-border-radius"
+                                <img src="{{ asset('img/newImg/simbolo.jpg') }}" class="card-img-top light-border-radius"
                                     alt="..">
                             @endif
 

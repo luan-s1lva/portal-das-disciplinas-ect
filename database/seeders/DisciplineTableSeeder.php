@@ -41,7 +41,7 @@ class DisciplineTableSeeder extends Seeder
         Discipline::create([
             'emphasis_id' => 2,
             'professor_id' => 1,
-            'code' => 'IMD0029',
+            'code' => 'IMD0032',
             'name' => 'Estrutura de dados básicas III',
             'description'=>'Iremos aprender como funciona a estrutura de dados.',
             'difficulties' => 'As dificuldades que os alunos encontram são programar com c++',
