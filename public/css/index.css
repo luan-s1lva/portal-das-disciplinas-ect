@@ -16,6 +16,7 @@
     width: 90vw;
 }
 
+
 .search-bar > *:not(:last-child) {
     margin-right: 1.8rem;
     display: block;
