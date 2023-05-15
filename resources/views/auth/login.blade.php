@@ -20,7 +20,7 @@ noindex, follow
                             Inicio
                         </a>-->
                     <div class='login-img-container'>
-                        <img src="{{ asset('img/imd-footer-2.png') }}" alt="Login Icon">
+                        <img src="{{ asset('img/newImg/simbolo.jpg') }}" alt="Login Icon">
                     </div>
                     <h2 class='login-title'>Login</h2>
                     <p class='text-center'>Utilize suas credenciais para acessar o portal.</p>
