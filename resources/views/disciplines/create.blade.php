@@ -11,7 +11,7 @@
 @section('content')
     <div class="container">
         <div class='page-title'>
-            <h1>Cadastro de disciplinas</h1>
+            <h1>Cadastro de disciplina</h1>
         </div>
 
         <form action="{{ route('disciplinas.store') }}" method="post">
@@ -314,6 +314,12 @@
                     </div> 
                 </div>
             </div>
+            <div class='page-title'>
+                <h3>Cadastro de FAQ</h3>
+            </div>
+            <div id="faqs">
+  
+            </div>
 
             {{-- <div class="form-row mt-3">
                 <div class="col-md-12">
@@ -340,10 +346,13 @@
             </div> --}}
 
             <div class="row d-flex p-2 mt-3 justify-content-center">
+                <a id="add-faq" class="btn btn-primary btn-sm mr-5">
+                    Adicionar FAQ
+                </a>
                 <a href="{{ route('home') }}" class="btn btn-danger btn-sm">
                     Cancelar
                 </a>
-                <button type="submit" class="btn btn-primary btn-sm ml-5">Registrar</button>
+                <button type="submit" class="btn btn-success btn-sm ml-5">Registrar</button>
             </div>
         </form>
     </div>
@@ -358,8 +367,6 @@
 <script>
 
     let classifications = JSON.parse('{!! $classificationsJson !!}');
-
-    console.log(classifications);
 
 
     function handleInput(value, element) {
@@ -388,6 +395,60 @@
         $('[data-toggle="tooltip"]').tooltip()
     })
 
+    var addButton = document.getElementById('add-faq');
+    let counter = 0;
+
+    addButton.addEventListener('click', function(event) {
+        event.preventDefault();
+        counter++;
+            // Create new elements
+    let newDiv = document.createElement('div');
+    newDiv.classList.add('modal-body');
+    
+    // Create form group for title
+    let formGroupTitle = document.createElement('div');
+    formGroupTitle.classList.add('form-group');
+
+    let titleLabel = document.createElement('label');
+    titleLabel.setAttribute('for', `title${counter}`);
+    titleLabel.classList.add('col-form-label');
+    titleLabel.textContent = "Pergunta";
+
+    let titleInput = document.createElement('input');
+    titleInput.type = "text";
+    titleInput.classList.add('form-control');
+    titleInput.id = `title${counter}`;
+    titleInput.name = `title[${counter}]`;
+    
+    // Append title elements
+    formGroupTitle.appendChild(titleLabel);
+    formGroupTitle.appendChild(titleInput);
+    
+    // Create form group for content
+    let formGroupContent = document.createElement('div');
+    formGroupContent.classList.add('form-group');
+
+    let contentLabel = document.createElement('label');
+    contentLabel.setAttribute('for', `content${counter}`);
+    contentLabel.classList.add('col-form-label');
+    contentLabel.textContent = "Resposta";
+
+    let contentTextarea = document.createElement('textarea');
+    contentTextarea.classList.add('form-control');
+    contentTextarea.id = `content${counter}`;
+    contentTextarea.name = `content[${counter}]`;
+
+    // Append content elements
+    formGroupContent.appendChild(contentLabel);
+    formGroupContent.appendChild(contentTextarea);
+
+    // Append form groups to newDiv
+    newDiv.appendChild(formGroupTitle);
+    newDiv.appendChild(formGroupContent);
+
+    // Append to faqs
+    faqs.appendChild(newDiv);
+        });
 </script>
 
 <style scoped>
