@@ -14,7 +14,9 @@ use App\Services\Urls\YoutubeService;
 use Illuminate\Http\Request;
 use \App\Models\Discipline;
 use \App\Models\Media;
+use \App\Models\Emphasis;
 use App\Models\Professor;
+use App\Models\Faq;
 use Exception;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -31,24 +33,65 @@ class DisciplineController extends Controller
     public function index(Request $request)
     {
         $name_discipline = $request->name_discipline ?? null;
-        $emphasis = $request->emphasis ?? null;
-        $disciplines = Discipline::query()
-            ->with([
-                'professor',
-                'medias',
-            ])
-            ->orderBy('name', 'ASC') 
-            ->when(isset($name_discipline), function($query) use($name_discipline) {
-                $query->where("name", "like", $name_discipline."%");
-            })
-            ->when(isset($emphasis), function($query) use($emphasis) {
-                $query->where("name", "like", $emphasis."%");
-            })
-            ->get();
+        // $emphasis = $request->emphasis ?? null;
 
+        $emphasis = Emphasis::all();
+        // $disciplines = Discipline::query()
+        //     ->with([
+        //         'professor',
+        //         'medias',
+        //     ])
+        //     ->orderBy('name', 'ASC') 
+        //     ->when(isset($name_discipline), function($query) use($name_discipline) {
+        //         $query->where("name", "like", $name_discipline."%");
+        //     })
+        //     ->when(isset($emphasis), function($query) use($emphasis) {
+        //         $query->where("name", "like", $emphasis."%");
+        //     })
+        //     ->get();
+        $emphasis = Emphasis::all();
+        $disciplines = Discipline::all();
         return view('disciplines.index')
-            ->with('name_discipline', $name_discipline)
-            ->with('disciplines', $disciplines); 
+            // ->with('name_discipline', $name_discipline)
+            ->with('disciplines', $disciplines)
+            ->with('emphasis', $emphasis); 
+    }
+
+    public function disciplineFilter(Request $request)
+    {
+        $emphasis_all = Emphasis::all();
+        $disciplines_all = Discipline::all();
+        $emphasis_id = $request->emphasis;
+        $discipline_name = $request->name_discipline;
+        $input;
+        $collection = collect([]);
+
+        if ($discipline_name != null && $emphasis_id != null) {
+            $input = Discipline::where("name", "like", "%".$discipline_name."%")->get();
+
+            foreach($input as $i) {
+                if($i->emphasis_id == $emphasis_id) {
+                    $collection->push($i);
+                }
+            }
+
+            return view('disciplines.index')->with('disciplines', $collection)->with('emphasis',$emphasis_all);
+        } else if ($emphasis_id != null) {
+            $input = Discipline::where('emphasis_id', $emphasis_id)->get();
+            
+            return view('disciplines.index')->with('disciplines', $input)->with('emphasis',$emphasis_all);
+        } else if ($discipline_name != null) {
+            $input = Discipline::where("name", "like", "%".$discipline_name."%")->get();
+
+            return view('disciplines.index')->with('disciplines', $input)->with('emphasis',$emphasis_all);
+        }  else if($emphasis_id == null) {
+            $input = Discipline::where("name", "like", "%".$discipline_name."%")->get();
+            
+            return view('disciplines.index')->with('disciplines', $input)->with('emphasis',$emphasis_all);
+        }
+        else {
+            return redirect('/')->with('disciplines', $disciplines_all)->with('emphasis', $emphasis_all); 
+        }
     }
 
     /**
@@ -61,12 +104,15 @@ class DisciplineController extends Controller
     {
         $professors = new Professor();
         $classifications = Classification::all();
+        $emphasis = Emphasis::all();
+
         if (Auth::user()->isAdmin) {
             $professors = Professor::query()->orderBy('name', 'ASC')->get();
         }
         return view(self::VIEW_PATH . 'create', compact('professors'))
-            ->with('classifications', $classifications);
-    }
+            ->with('classifications', $classifications)
+            ->with('emphasis', $emphasis);
+            }
 
     /**
      * Store a newly created resource in storage.
@@ -87,8 +133,8 @@ class DisciplineController extends Controller
             $discipline = Discipline::create([
                 'name' => $request->input('name'),
                 'code' => $request->input('code'),
-                'synopsis' => $request->input('synopsis'),
-                'emphasis' => $request->input('emphasis'),
+                'description' => $request->input('synopsis'),
+                'emphasis_id' => $request->input('emphasis'),
                 'difficulties' => $request->input('difficulties'),
                 'acquirements' => $request->input('acquirements'),
                 'professor_id' => $user->isAdmin ? $professor->id : $user->professor->id
@@ -165,6 +211,20 @@ class DisciplineController extends Controller
                 ]);
             }
 
+            $titles = $request->input('title');
+            $contents = $request->input('content');
+
+            if($titles != null)
+            {
+                foreach($titles as $key => $title) {
+                    Faq::create([
+                        'discipline_id' => $discipline->id,
+                        'title' => $title,
+                        'content' => $contents[$key],
+                    ]);
+                }
+            }
+
             DB::commit();
             return redirect()->route("disciplinas.show", $discipline->id);
         } catch (\Exception $exception) {
@@ -212,6 +272,7 @@ class DisciplineController extends Controller
      */
     public function edit($id)
     {
+        $emphasis = Emphasis::all();
         $professors = new Professor();
         if (Auth::user()->isAdmin) {
             $professors = Professor::query()->orderBy('name', 'ASC')->get();
@@ -226,7 +287,8 @@ class DisciplineController extends Controller
         $classifications = Classification::all();
 
         return view(self::VIEW_PATH . 'edit', compact('discipline'), compact('professors'))
-            ->with('classifications', $classifications);
+            ->with('classifications', $classifications)
+            ->with('emphasis', $emphasis); 
     }
 
     /**
@@ -251,8 +313,8 @@ class DisciplineController extends Controller
             $discipline->update([
                 'name' => $request->input('name'),
                 'code' => $request->input('code'),
-                'synopsis' => $request->input('synopsis'),
-                'emphasis' => $request->input('emphasis'),
+                'description' => $request->input('description'),
+                'emphasis_id' => $request->input('emphasis'),
                 'difficulties' => $request->input('difficulties'),
                 'acquirements' => $request->input('acquirements'),
                 'professor_id' => $user->isAdmin ? $professor->id : $user->professor->id

@@ -1,24 +1,98 @@
-
-.our-team{
+.our-team {
     margin-bottom: 10%;
 }
 
-.regular-image{width: 140px;}
-.smaller-image{width: 80px;}
+.info-collaborators-container{
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+}
 
-.clip-path{
+.info-collaborators{
+    margin-top:10px;
+    margin-bottom:10px;
+    display: inline;
+
+}
+
+.info-collaborators-container span{
+    color: rgb(113, 210, 255);
+    margin-left:10px;
+    cursor: pointer;
+}
+
+.regular-image {
+    width: 140px;
+}
+.smaller-image {
+    width: 80px;
+}
+
+.clip-path {
     clip-path: circle(50% at 50% 50%);
-    
 }
 
-#devsGrid{
-    margin-bottom:2rem;
-   
+#devsGrid {
+    margin-bottom: 2rem;
 }
 
-@media only all and (max-width:1192px){
-    .regular-image{
+@media only all and (max-width: 1192px) {
+    .regular-image {
         width: 120px;
     }
-    .smaller-image{width: 64px;}
+    .smaller-image {
+        width: 64px;
+    }
+}
+
+.modal-information{
+    position:absolute;
+    background-color: rgba(0,0,0,0.8);
+    width: 100%;
+    height: 100%;
+    z-index: 9999999;
+}
+
+.modal-information-invisible{
+    display: none;
+}
+
+.modal-information .content{
+    margin: 0 auto;
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    color:rgb(0, 0, 0);
+    background-color: white;
+    max-width: 500px;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.modal-information h3{
+    color: rgb(64, 195, 255);
+    align-self: center;
+}
+
+.modal-information form{
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-information input{
+    margin-bottom:10px;
+}
+
+.modal-information .buttons{
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+}
+
+.modal-information .checkboxes{
+    color: black;
+}
+
+.buttons button{
+    margin-left: 10px;
 }

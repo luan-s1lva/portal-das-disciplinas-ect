@@ -19,23 +19,19 @@ mais.
     <h3>{{ $discipline->emphasis}}</h3>
 </div>
 
-<div class="container">
+<div class="container mt-4">
     <!-- Botão de cadastro FAQ -->
 
     @auth
+
+    @if (Auth::user()->canDiscipline($discipline->id))
+    <h3 class="mt-3">Menu do professor</h3>
     @if(isset($can) && $can)
-    <div>
-        <div class="w-25 my-5">
-            <!-- Button trigger modal -->
-            <button type="button" class="btn btn-outline-white btn-block text-white" data-toggle="modal"
+    <button type="button" class="btn btn-outline-white text-white w-25 mt-2" data-toggle="modal"
                 data-target="#faqs-create" style='background-color:#1155CC'>
                 Registrar FAQ
-            </button>
-        </div>
-    </div>
+    </button>
     @endif
-    @if (Auth::user()->canDiscipline($discipline->id))
-    <h3>Menu do professor</h3>
     <form action=" {{route('disciplinas.edit', $discipline->id)}}" class="d-inline" method="get">
         @csrf
         @method('UPDATE')
@@ -46,8 +42,8 @@ mais.
         @method('DELETE')
         <button type="submit" class="btn btn-danger w-25 mt-2" value="Apagar">Apagar</button>
     </form>
-
     @endif
+
     @endauth
     <!-- ROW Da PAGE -->
     <div class="row mt-5">
@@ -72,13 +68,13 @@ mais.
                 <h1 class="mb-3">Sinopse</h1>
                 <div>
                     <div>
-                        @if($discipline->synopsis=='')
+                        @if($discipline->description=='')
                         <div>
                             <p>Não há sinopse cadastrada.</p>
                         </div>
                         @else
                         <div>
-                            <p style='text-align: justify; '>{{ $discipline->synopsis}}</p>
+                            <p style='text-align: justify; '>{{ $discipline->description}}</p>
                         </div>
                         @endif
                     </div>
@@ -306,11 +302,12 @@ mais.
     <div class="container col-md-5">
         <div class="section">
             <h1 class="container-fluid  text-center mt-5">Faça uma pergunta!</h1>
+            <!-- É necessário autenticaro  email do professor anteriormente -->
 
-            <form action="https://formsubmit.co/{{ $discipline->professor->public_email
-            }}" method="POST">
+            <form id="formDuvida" action="https://formsubmit.co/" method="POST">
                 <!-- COLOQUE NO INPUT ABAIXO O EMAIL PARA ENVIAR UMA CÓPIA (EMAIL DE EUGÊNIO) -->
-                <input type="hidden" name="_cc" value="henrymedeiros77@gmail.com" />
+                <input type="hidden" name="_cc" value="eugenio@imd.ufrn.br" />
+                <input type="hidden" name="_cc" value="{{ $discipline->professor->public_email }}" />
                 <div class="form-group">
                     <label for="studentEmail">Email</label>
                     <input type="email" id='studentEmail' name='Email do estudante' class="form-control" placeholder="Digite aqui o seu email..." required>
@@ -321,14 +318,12 @@ mais.
                 </div>
 
                 <div class="form-group">
-                    <label for="studentQuestionDetails">Example textarea</label>
+                    <label for="studentQuestionDetails">Descrição da pergunta</label>
                     <textarea class="form-control" name='Detalhes' rows="3" placeholder="Forneça mais detalhes da sua pergunta..."></textarea>
                 </div>
                 <input type="hidden" name="_next" value='http://127.0.0.1:8000/disciplinas/{{$discipline->id}}'>
                 <button class='blue-btn btn w-100' type="submit">Enviar pergunta</button>
             </form>
-
-            
         </div>
     </div>
 
@@ -377,6 +372,11 @@ mais.
 @endsection
 @section('scripts-bottom')
 <script>
+    document.getElementById("formDuvida").addEventListener("submit", function(event) {
+    var studentEmail = document.getElementById("studentEmail").value;
+    var formAction = "https://formsubmit.co/" + encodeURIComponent(studentEmail);
+    this.action = formAction;
+  });
     $(function () {
         $('[data-toggle="tooltip"]').tooltip()
     })
