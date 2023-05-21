@@ -1,10 +1,14 @@
 
   <header class="sticky-top shadow">
       <div class="menu-container container d-flex mt-0 justify-content-between align-items-center">
-
+        <div style="display:flex; align-items:center;">
           <a class="navbar-brand" href="{{ route('index') }}">
-              <img src="{{ asset('img/new-imd-logo.svg') }}" class='logo-navbar' alt="Logo do IMD">
+              <img src="{{ asset('img/newImg/simbolo.jpg') }}" class='logo-navbar' alt="Logo da ECT"
+                style="height:65px;"
+              >
           </a>
+          <p>Escola de Ciências e Tecnologia</p>
+        </div>
           <div class="menu-section">
               <div class="container-menu-burger">
                   <div class="menu-burger"></div>
@@ -14,7 +18,7 @@
 
 
               <nav>
-                  <a href="{{ route("index") }}">Inicio</a>
+                  <a href="{{ route('index') }}">Inicio</a>
                   <a href="{{ route('information') }}">Sobre & Colabore</a>
                   @guest
                       @if(Route::has('login'))
