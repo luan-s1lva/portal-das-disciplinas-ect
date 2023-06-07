@@ -57,7 +57,7 @@ mais.
                         src="{{ $discipline->trailer->view_url}}" allowfullscreen></iframe>
                 </div>
                 @else
-                <img style='border-radius: 6px;' class="img-fluid" src="{{ asset('img/novideo1.png') }}"
+                <img style='border-radius: 6px;' class="img-fluid" src="{{ asset('img/newImg/noVideoEct.png') }}"
                     alt="Sem trailer">
                 @endif
             </div>
@@ -94,7 +94,7 @@ mais.
                         src="{{ $discipline->getMediasByType(\App\Enums\MediaType::VIDEO)->first()->view_url }}"></iframe>
                 </div>
                 @else
-                <img style='border-radius: 6px;' class="img-fluid" src="{{ asset('img/novideo2.png') }}"
+                <img style='border-radius: 6px;' class="img-fluid" src="{{ asset('img/newImg/noVideoEct.png') }}"
                     alt="Sem vídeo">
                 @endif
             </div>
@@ -192,7 +192,7 @@ mais.
                     seu navegador não suporta HTML5
                 </audio>
                 @else
-                <img class="img-fluid light-border-radius" src="{{asset('img/nopodcast.png') }}" alt="Sem podcast">
+                <img class="img-fluid light-border-radius" src="{{asset('img/newImg/noPodcastEct.png') }}" alt="Sem podcast">
                 @endif
             </div>
             <hr>
