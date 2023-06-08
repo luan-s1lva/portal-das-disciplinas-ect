@@ -63,7 +63,8 @@ class ProfessorUserController extends Controller
                 'link_rsocial3' => $request->get('link_rsocial3', $user->link_rsocial3),
                 'rede_social4' => $request->get('rede_social4', $user->rede_social4),
                 'link_rsocial4' => $request->get('link_rsocial4', $user->link_rsocial4),
-                'user_id' => $user->id
+                'user_id' => $user->id,
+                'sigaa' => 0
             ]);
 
             DB::commit();
