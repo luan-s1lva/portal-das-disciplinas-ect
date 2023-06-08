@@ -34,6 +34,7 @@ class Professor extends Model
         'rede_social4',
         'link_rsocial4',
         'user_id',
+        'sigaa'
     ];
 
     /**
